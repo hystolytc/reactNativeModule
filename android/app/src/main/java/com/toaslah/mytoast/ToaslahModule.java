@@ -10,6 +10,14 @@ import com.facebook.react.bridge.ReactMethod;
 import java.util.Map;
 import java.util.HashMap;
 
+// This module for read contact
+import android.provider.ContactsContract;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.widget.AdapterView;
+
+
 public class ToaslahModule extends ReactContextBaseJavaModule {
 
     private static final String DURATION_SHORT_KEY = "SHORT"; 
@@ -37,5 +45,6 @@ public class ToaslahModule extends ReactContextBaseJavaModule {
     public void show(String message, int duration) {
         Toast.makeText(getReactApplicationContext(), message, duration).show();
     }
+    
 
 }

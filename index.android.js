@@ -1,11 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
-import PhoneInput from 'react-native-phone-input'
+import { AppRegistry, Text, View, Navigator, BackAndroid } from 'react-native';
+import Contact from './Contact';
 import {
   AppRegistry,
   StyleSheet,
@@ -15,54 +10,102 @@ import {
   NativeModules
 } from 'react-native';
 
-const MyToast = NativeModules.Toaslah;
+const Contact = NativeModules.Contact;
 
 export default class toaslah extends Component {
-  /*render() {
+ render() {
+    var initialRoute = { name:'bridge', title: strings.signup }
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <TouchableOpacity onPress={()=>this.showToast('hello world long', 500)}>
-          <Text>Show Hello world long</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>this.showToast('hello world short', 1)}>
-          <Text>Show Hello world short</Text>
-        </TouchableOpacity>
-      </View>
+      <Navigator
+        initialRoute={initialRoute}
+        renderScene={RouteMapper}
+        ref={(nav) => { this.navigator = nav }}
+        />
     );
   }
 
-  showToast(message, duration){
-    MyToast.show(message,duration);
-  }*/
+  componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress', this.onBackPress.bind(this));
+  }
 
-
-render(){
-    return(
-        <PhoneInput />
-    )
+  onBackPress() {
+    if (this.navigator && this.navigator.getCurrentRoutes().length > 1) {
+        this.navigator.pop();
+        return true;
+    }
+    return false;
+  }
 }
-}
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: '#F5FCFF',
-//   },
-//   welcome: {
-//     fontSize: 20,
-//     textAlign: 'center',
-//     margin: 10,
-//   },
-//   instructions: {
-//     textAlign: 'center',
-//     color: '#333333',
-//     marginBottom: 5,
-//   },
-// });
+var RouteMapper = function(route, navigator) {
+  switch (route.name) {
+    case 'pin':
+      return (
+        <Pin
+          title={route.title}
+          navigator={navigator}
+          />
+      );
+      break;
+    case 'login':
+      return (
+        <Login
+          navigator={navigator}
+          />
+      );
+      break;
+    case 'bridge':
+      return (
+        <BridgetList
+          navigator={navigator}
+          />
+        );
+      break
+    case 'contact':
+      return (
+        <Contact
+          navigator={navigator}
+          />
+        );
+      break;
+    case 'notif':
+      return (
+        <Notif
+          navigator={navigator}
+          />
+        );
+      break;
+    case 'receiver':
+      return (
+        <Receiver
+          navigator={navigator}
+          />
+        );
+      break;
+    case 'service':
+      return (
+        <Service
+          navigator={navigator}
+          />
+        );
+      break;
+    case 'sms':
+      return (
+        <Sms
+          navigator={navigator}
+          />
+        );
+      break;
+    case 'db':
+      return (
+        <Database
+          navigator={navigator}
+          />
+        );
+      break;
+    default:
+      break;
+  }
+}
 
 AppRegistry.registerComponent('toaslah', () => toaslah);

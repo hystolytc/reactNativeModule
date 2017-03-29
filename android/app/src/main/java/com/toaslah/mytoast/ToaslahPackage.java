@@ -23,10 +23,12 @@ public class ToaslahPackage implements ReactPackage {
     }
 
     @Override
-    public List<NativeModule> createNativeModules( ReactApplicationContext reactContext) { 
-        List<NativeModule> modules = new ArrayList<>(); 
-        modules.add(new ToaslahModule(reactContext)); 
-        return modules; 
+    public List<NativeModule> createNativeModules(
+            ReactApplicationContext reactContext) {
+        List<NativeModule> modules = new ArrayList<>();
+
+        modules.add(new ContactModule(reactContext));
+        return modules;
     }
 
 }
